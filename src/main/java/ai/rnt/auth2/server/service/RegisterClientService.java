@@ -58,7 +58,7 @@ public class RegisterClientService implements RegisteredClientRepository {
 		return this.clientRepository.findByClientId(clientId).map(this::toObject).orElse(null);
 	}
 
-	private RegisteredClient toObject(OAuthClient client) {
+	public RegisteredClient toObject(OAuthClient client) {
 		Set<String> clientAuthenticationMethods = StringUtils
 				.commaDelimitedListToSet(client.getClientAuthenticationMethods());
 		Set<String> authorizationGrantTypes = StringUtils.commaDelimitedListToSet(client.getAuthorizationGrantTypes());

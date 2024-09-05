@@ -15,8 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Where;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
@@ -28,7 +26,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 // @formatter:off
 @Entity
 @Table(name = "role_master")
-@Where(clause = "deleted_by is null")
 public class RoleMaster{
 
 

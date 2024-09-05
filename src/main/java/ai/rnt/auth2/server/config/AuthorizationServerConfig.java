@@ -34,6 +34,7 @@ import org.springframework.security.oauth2.server.authorization.oidc.authenticat
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -51,13 +52,13 @@ public class AuthorizationServerConfig {
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 		OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer = http
 				.getConfigurer(OAuth2AuthorizationServerConfigurer.class);
-
 		authorizationServerConfigurer
-				.oidc(oidc -> oidc.userInfoEndpoint(userInfo -> userInfo.userInfoMapper(userInfoMapper()))
-						.clientRegistrationEndpoint(Customizer.withDefaults()));
+				.oidc(oidc -> oidc.userInfoEndpoint(userInfo -> userInfo.userInfoMapper(userInfoMapper())) // User info
+																											// mapping
+						.clientRegistrationEndpoint(Customizer.withDefaults()) // Client registration endpoint
+				);
 		http.exceptionHandling(e -> e.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
-				.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
-
+		    .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 		return http.build();
 	}
 
